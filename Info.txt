@@ -1,0 +1,31 @@
+https://github.com/d2n0s4ur/Philosophers/blob/main/philo/philo.h
+
+eat
+sleep
+think
+
+forks = aantal Philosophers
+mininmaal 2.
+na eten -> slaap -> think of eten
+starve = death -> weergave 10 ms
+
+each philo thread
+
+number_of_philosophers		int
+time_to_die 				ms
+time_to_eat 				ms
+time_to_sleep				ms
+? number_of_times_each_philosopher_must_eat
+
+of wanneer er 1 doodgaat -> max 10 ms na dood
+
+memset, printf, malloc, free, write,
+usleep, 
+gettimeofday, 
+pthread_create,
+pthread_detach, 
+pthread_join, 
+pthread_mutex_init,
+pthread_mutex_destroy, 
+pthread_mutex_lock,
+pthread_mutex_unlock
