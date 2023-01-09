@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 14:17:00 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/06 20:28:28 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/01/09 14:08:09 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct s_arg
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				number_must_eat;
+	size_t			time_start;
 	int				eat_cnt;
-	long long		time_init;
 	int				finish;
 }	t_arg;
 
@@ -51,9 +51,11 @@ typedef struct s_philo
 
 int		check_input(int argc, char **argv);
 int 	init_struct(t_arg *arg, int argc, char **argv);
-t_philo *init_philo(t_arg *arg);
+t_philo *init_philo(t_arg *arg, char **argv);
 size_t	get_time_micro();
 int		create_threads(pthread_t *thread, t_arg *arg, t_philo *philo);
-void 	*philo(void *arg);
+void 	*philo_routine(void *s);
 void 	sleep_philo(t_philo *philo);
+void 	think_philo(t_philo *philo);
+void 	eat_philo(t_philo *philo);
 #endif
