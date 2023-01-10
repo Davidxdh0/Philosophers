@@ -6,13 +6,12 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 14:17:00 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/09 14:08:09 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/01/10 15:45:52 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
-# include "libft/libft.h"
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -28,6 +27,7 @@ typedef struct s_arg
 {
 	int				*fork;
 	pthread_mutex_t	forks;
+	pthread_mutex_t	death_signal;
 	int				philo_num;
 	int				time_to_die;
 	int				time_to_eat;
@@ -49,6 +49,7 @@ typedef struct s_philo
 	t_arg		*arg;
 }	t_philo;
 
+//static int	ft_isspace(int c);
 int		check_input(int argc, char **argv);
 int 	init_struct(t_arg *arg, int argc, char **argv);
 t_philo *init_philo(t_arg *arg, char **argv);
@@ -58,4 +59,6 @@ void 	*philo_routine(void *s);
 void 	sleep_philo(t_philo *philo);
 void 	think_philo(t_philo *philo);
 void 	eat_philo(t_philo *philo);
+int		ft_atoi(const char *str);
+
 #endif

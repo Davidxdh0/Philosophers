@@ -5,7 +5,7 @@ CFLAGS 		= 	-Wall -Wextra -Werror
 INCLUDE 	= 	./include
 VPATH 		= 	src
 
-SRC_FILES 	=	main.c
+SRC_FILES 	=	main.c utils.c philo.c init.c
 
 # object files
 OBJ_DIR = obj
@@ -15,25 +15,21 @@ OBJ_FILES = $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
 LIBFT = libft.a
 
 # Default build
-all: $(OBJ_DIR) $(LIBFT) $(NAME)
+all: $(OBJ_DIR) $(NAME)
 
 # obj dir
 ${OBJ_DIR}	:
 				mkdir -p ${OBJ_DIR}
 
-# Libft
-$(LIBFT)	:
-				make -C libft
 # Build 
 ${NAME}		: 	${OBJ_FILES} 
-				$(CC) $(CFLAGS) $^ libft/$(LIBFT) -o $@
+				$(CC) $(CFLAGS) $^ -o $@
 
 $(OBJ_FILES): 	$(OBJ_DIR)/%.o : %.c
 				$(CC) $(CFLAGS) -c $< -o $@
 
 clean		:
 				rm -rf ${OBJ_DIR}
-				make fclean -C libft/
 
 fclean		:	clean
 				rm -rf ${NAME}
