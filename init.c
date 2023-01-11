@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:28:33 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/10 15:29:20 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/01/11 15:18:31 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int init_struct(t_arg *arg, int argc, char **argv)
 		arg->number_must_eat = ft_atoi(argv[5]);
 	else
 		arg->number_must_eat = 0;
-	arg->time_start = (get_time_micro()/1000);
+	arg->time_start = get_time_micro();
 	// arg->forks = malloc(sizeof(pthread_mutex_t) * arg->philo_num);
 	if (arg->philo_num < 1 || arg->time_to_die < 1 || arg->time_to_eat < 1 \
 		|| arg->time_to_sleep < 1 || arg->number_must_eat < 0)
@@ -52,11 +52,10 @@ t_philo *init_philo(t_arg *arg, char **argv)
 		if (i == 0)
 			philo[i].forkright = num - 1;
 		else
-			philo[i].forkright = i  -1;
+			philo[i].forkright = i  - 1;
 		philo[i].philo_num = i;
 		philo[i].forkleft = i;
 		philo[i].time_last_ate = get_time_micro();
-		printf("%zu\n", philo[i].time_last_ate);
 		philo[i].eat_count = 0;
 		philo[i].arg = arg;
 		i++;

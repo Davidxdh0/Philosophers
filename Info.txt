@@ -1,15 +1,7 @@
-https://github.com/d2n0s4ur/Philosophers/blob/main/philo/philo.h
+forks = aantal Philosophers -> mininmaal 2 anders niet eten
 
-eat
-sleep
-think
-
-forks = aantal Philosophers
-mininmaal 2.
 na eten -> slaap -> think of eten
 starve = death -> weergave 10 ms
-
-each philo thread
 
 number_of_philosophers		int
 time_to_die 				ms
@@ -33,3 +25,14 @@ pthread_mutex_unlock
 heel groot en klein
 time to die klopt
 
+Todo:
+structs cleanen
+ft_atoi?
+Mutex locken en testen
+sleep
+eat
+think
+death checker
+free memory
+
+laten testen en inleveren

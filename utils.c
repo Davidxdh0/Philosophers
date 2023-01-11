@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:30:45 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/10 15:44:59 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/01/11 14:21:58 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,26 @@ int	create_threads(pthread_t *thread, t_arg *arg, t_philo *philo)
 		i++;
 	}
 	return (0);
+}
+
+void	print_all(t_philo *philo)
+{
+	printf("phil num  %d \n", philo->arg->philo_num);
+	printf("eat count %d \n", philo->eat_count);
+	printf("fork left %d \n", philo->forkleft);
+	printf("fork righ %d \n", philo->forkright);
+	printf("philo num %d \n", philo->philo_num);
+	printf("tlasteat  %zu \n", philo->time_last_ate);
+
+	// printf("%d \n", philo->arg->death_signal);
+	printf("eat cnt %d \n", philo->arg->eat_cnt);
+	printf("finish  %d \n", philo->arg->finish);
+	// printf("%d \n", philo->arg->fork);
+	// printf("%d \n", philo->arg->forks);
+
+	printf("musteat %d \n", philo->arg->number_must_eat);
+	printf("tstart  %zu \n", philo->arg->time_start);
+	printf("t_todie %d \n", philo->arg->time_to_die);
+	printf("tteat   %d \n", philo->arg->time_to_eat);
+	printf("ttsleep %d \n\n", philo->arg->time_to_sleep);
 }

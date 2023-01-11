@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 14:17:00 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/10 15:45:52 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/01/11 15:04:40 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,7 @@ void 	sleep_philo(t_philo *philo);
 void 	think_philo(t_philo *philo);
 void 	eat_philo(t_philo *philo);
 int		ft_atoi(const char *str);
-
+void	print_all(t_philo *philo);
+void	death_checker(t_philo *philo, t_arg *arg);
+void	check_death(t_philo *philo);
 #endif

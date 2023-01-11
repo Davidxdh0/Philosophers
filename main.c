@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/05 20:08:30 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/10 15:46:26 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/01/11 14:54:18 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_input(int argc, char **argv)
 		j = 0;
 		while (argv[i][j])
 		{
-			if (argv[i][j] < '0' && argv[i][j] > '9')
+			if (argv[i][j] < '0' || argv[i][j] > '9')
 			{
 				printf("fout %c [i = %d][j = %d",argv[i][j], i, j);
 				return(1);
@@ -33,7 +33,7 @@ int	check_input(int argc, char **argv)
 		}
 		i++;
 	}
-	printf("input\n");
+	printf("input is correct\n");
 	return (0);
 }
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv)
 	}
 	arg = malloc(sizeof(t_arg));
 	if (!arg || check_input(argc, argv))
-		return(1);
+		return (1);
 	// allocate memory
 	philo = init_philo(arg, argv);
 	if (!philo)
@@ -65,7 +65,8 @@ int	main(int argc, char **argv)
 	printf("begin eten/slapen/denken\n");
 	if (create_threads(thread, arg, philo))
 		return (1);
-	printf("dood of free'en");
+	death_checker(philo);
+	printf("dood of free'en\n");
 	//
 	
 
