@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 14:17:00 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/11 15:04:40 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/01/18 18:09:50 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 typedef struct s_arg
 {
 	int				*fork;
-	pthread_mutex_t	forks;
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	death_signal;
 	int				philo_num;
 	int				time_to_die;
@@ -63,4 +63,5 @@ int		ft_atoi(const char *str);
 void	print_all(t_philo *philo);
 void	death_checker(t_philo *philo, t_arg *arg);
 void	check_death(t_philo *philo);
+void	mysleep(useconds_t time);
 #endif

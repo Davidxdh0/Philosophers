@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:30:45 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/11 14:21:58 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/01/18 18:09:17 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,17 @@ size_t	get_time_micro()
 	gettimeofday(&time, NULL);
 	return(time.tv_sec * 1000000 + time.tv_usec);
 }
+
+void	mysleep(useconds_t time)
+{
+	size_t timestart;
+	
+	timestart = get_time_micro();
+	// printf("mysleep %zu\n", time);
+	while(get_time_micro() - timestart < time)
+		usleep(1);
+}
+
 
 int	create_threads(pthread_t *thread, t_arg *arg, t_philo *philo)
 {

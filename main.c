@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/05 20:08:30 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/11 14:54:18 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/01/18 14:01:51 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,12 @@ int	main(int argc, char **argv)
 		return(1);
 	//printf("philo num = %d die = %d, eat = %d sleep = %d \n", philo->arg->philo_num,  philo->arg->time_to_die,  philo->arg->time_to_eat,  philo->arg->time_to_sleep);
 	//maak threads van philo's en stuur door naar philo
-	printf("begin eten/slapen/denken\n");
+	//printf("begin eten/slapen/denken\n");
 	if (create_threads(thread, arg, philo))
 		return (1);
-	death_checker(philo);
+	death_checker(philo, arg);
 	printf("dood of free'en\n");
+
 	//
 	
 
