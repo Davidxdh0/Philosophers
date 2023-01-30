@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:30:45 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/18 18:09:17 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/01/30 10:45:06 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,52 @@ void	mysleep(useconds_t time)
 	timestart = get_time_micro();
 	// printf("mysleep %zu\n", time);
 	while(get_time_micro() - timestart < time)
-		usleep(1);
+		usleep(100);
 }
 
+static u_int64_t    sec_to_millisec(u_int64_t sec)
+{
+    u_int64_t   millisec;
+    millisec = sec * 1000;
+    return (millisec);
+}
+
+static u_int64_t    microsec_to_millisec(u_int64_t microsec)
+{
+    u_int64_t   millisec;
+    millisec = microsec / 1000;
+    return (millisec);
+}
+
+u_int64_t   get_current_time(void)
+{
+    struct timeval  tv;
+    u_int64_t       cur_time_ms;
+    gettimeofday(&tv, NULL);
+    cur_time_ms = (u_int64_t)sec_to_millisec(tv.tv_sec) + \
+    microsec_to_millisec(tv.tv_usec);
+    return (cur_time_ms);
+}
+
+/*  MORE ACCURATE VERSION OF USLEEP
+ */
+void    p_sleep(t_arg *data, long long ms)
+{
+    struct timeval  start;
+    struct timeval  end;
+    gettimeofday(&start, NULL);
+    while (1)
+    {
+        gettimeofday(&end, NULL);
+        if ((end.tv_sec - start.tv_sec) * 1000 + (end.tv_usec - start.tv_usec)
+            / 1000 >= ms)
+            return ;
+        if (data->philo_num < 10)
+            usleep(100);
+        else
+            usleep(1000);
+    }
+}
 
 int	create_threads(pthread_t *thread, t_arg *arg, t_philo *philo)
 {
@@ -79,11 +122,11 @@ int	create_threads(pthread_t *thread, t_arg *arg, t_philo *philo)
 		if (pthread_create(&thread[i], NULL, &philo_routine, &philo[i]))
 		{
 			printf("create threads faalt");
-			return (1);
+			return (0);
 		}
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 void	print_all(t_philo *philo)

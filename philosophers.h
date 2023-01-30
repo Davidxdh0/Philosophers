@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 14:17:00 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/26 14:34:45 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/01/30 14:10:27 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_philo
 	size_t		time_last_ate;
 	int			eat_count;
 	int			philo_num;
-	pthread_t	tid;
 	t_arg		*arg;
 }	t_philo;
 
@@ -61,8 +60,17 @@ void 	think_philo(t_philo *philo);
 void 	eat_philo(t_philo *philo);
 int		ft_atoi(const char *str);
 void	print_all(t_philo *philo);
-void	death_checker(t_philo *philo, t_arg *arg);
+void	death_checker(t_philo *philo);
 void	check_death(t_philo *philo);
 void	mysleep(useconds_t time);
 void	philostatus(t_philo *philo, char *routine);
+int		init_mutex(t_arg *arg);
+int	finish(t_philo *philo);
+// static void	check_fork(t_philo *philo, int fork);
+void    p_sleep(t_arg *data, long long ms);
+u_int64_t   get_current_time(void);
+// static u_int64_t    sec_to_millisec(u_int64_t sec);
+// static u_int64_t    microsec_to_millisec(u_int64_t microsec);
+void	end_philos(t_philo *philo, pthread_t *thread, t_arg *arg);
+
 #endif

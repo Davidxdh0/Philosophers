@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:29:32 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/26 14:41:29 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/01/30 14:32:05 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,99 +14,95 @@
 
 void	philostatus(t_philo *philo, char *routine)
 {
-	if (philo->arg->finish == 1)
-		return ;
 	pthread_mutex_lock(&philo->arg->death_signal);
-	printf("%d is %s\n", philo->philo_num, routine);
+	printf("%zu		%d %s\n", (get_time_micro() - philo->arg->time_start)/1000, philo->philo_num + 1, routine);
 	pthread_mutex_unlock(&philo->arg->death_signal);
+	
 }
 
 void sleep_philo(t_philo *philo)
 {
-
-	if (philo->arg->finish == 1)
-		return ;
-	pthread_mutex_lock(&philo->arg->death_signal);
-	pthread_mutex_unlock(&philo->arg->death_signal);
-	//check of iemand dood is dan pas printen.
-	printf("%d is sleeping %d micros\n", philo->philo_num, philo->arg->time_to_sleep * 1000);
+	philostatus(philo, "sleeping");
 	mysleep(philo->arg->time_to_sleep * 1000);
+
 }
 
 void think_philo(t_philo *philo)
 {
-	if (philo->arg->finish == 1)
-		return ;
-	pthread_mutex_lock(&philo->arg->death_signal);
-	pthread_mutex_unlock(&philo->arg->death_signal);
-	printf("%d is thinking %lu timetodie\n", philo->philo_num, (get_time_micro()-philo->time_last_ate));
+	philostatus(philo, "thinking");
 }
 
+// static void	check_fork(t_philo *philo, int fork)
+// {
+// 	// while(philo->arg->finish == 0)
+// 	// {
+// 		pthread_mutex_lock(&philo->arg->forks[fork]);
+// 		if (philo->arg->fork[fork] == 0)
+// 		{
+// 			philo->arg->fork[fork] = 1;
+// 			//pthread_mutex_unlock(&philo->arg->forks[fork]);
+// 			return ;
+// 		}
+// 		//pthread_mutex_unlock(&philo->arg->forks[fork]);
+// 	// }
+// }
+
 void eat_philo(t_philo *philo)
-{
-	//pthread_mutex_lock(&philo->arg->forks);
-	while (1)
-	{
-		
-		if (philo->arg->fork[philo->forkright] == 1)
-		{
-			printf("%d philo %lu dying in right %d left %d\n", philo->philo_num, (get_time_micro() - philo->time_last_ate), philo->arg->fork[philo->forkleft], philo->arg->fork[philo->forkright]);
-			usleep(100);
-		}
-		else
-		{
-			//printf("%d philo %lu dying in right %d left %d\n", philo->philo_num, (get_time_micro() - philo->time_last_ate),philo->arg->fork[philo->forkleft], philo->arg->fork[philo->forkright]);
-			pthread_mutex_lock(&philo->arg->forks[philo->forkright]);
-			philo->arg->fork[philo->forkright] = 1;
-			pthread_mutex_lock(&philo->arg->forks[philo->forkleft]);	
-			philo->arg->fork[philo->forkleft] = 1;
-			pthread_mutex_lock(&philo->arg->death_signal);
-			pthread_mutex_unlock(&philo->arg->death_signal);
-			philo->time_last_ate = get_time_micro();
-			printf("%d is eating   %lu timetodie\n", philo->philo_num, (get_time_micro()-philo->time_last_ate) + philo->arg->time_to_die*1000);
-			mysleep(philo->arg->time_to_eat*1000);
-			philo->arg->fork[philo->forkright] = 0;
-			philo->arg->fork[philo->forkleft] = 0;
-			pthread_mutex_unlock(&philo->arg->forks[philo->forkright]);
-			pthread_mutex_unlock(&philo->arg->forks[philo->forkleft]);
-			break ;
-		}
-	}
-	//printf("%d is eating\ncurrenttime=%zu\ntimelastate=%zu\n", philo->philo_num, get_time_micro(), philo->time_last_ate);	
-	//philo->time_last_ate = get_time_micro() / 1000
-	//pthread_mutex_unlock(&philo->arg->forks);
+{	
+	pthread_mutex_lock(&philo->arg->forks[philo->forkright]);
+	philostatus(philo, "takes right fork");
+	philo->arg->fork[philo->forkright] = 1;
+	pthread_mutex_lock(&philo->arg->forks[philo->forkleft]);
+	philo->arg->fork[philo->forkleft] = 1;
+	philostatus(philo, "takes left fork");
+	philo->time_last_ate = get_time_micro();
+	philostatus(philo, "is eating");
+	mysleep(philo->arg->time_to_eat*1000);
+	//p_sleep(philo->arg, philo->arg->time_to_eat);
+	philo->arg->fork[philo->forkright] = 0;
+	philo->arg->fork[philo->forkleft] = 0;
+	pthread_mutex_unlock(&philo->arg->forks[philo->forkright]);
+	pthread_mutex_unlock(&philo->arg->forks[philo->forkleft]);
 }
 
 void	check_death(t_philo *philo)
 {
+	//pthread_mutex_lock(&philo->arg->death_signal);
 	if (get_time_micro() - philo->time_last_ate > (size_t)(philo->arg->time_to_die * 1000))
 		{
-			printf("if %zu > %zu \n", get_time_micro() - philo->time_last_ate, (size_t)(philo->arg->time_to_die * 1000));
+			pthread_mutex_unlock(&philo->arg->death_signal);
 			philo->arg->finish = 1;
+			philostatus(philo, "died");
 			pthread_mutex_lock(&philo->arg->death_signal);
-			printf("philo %d is dead\n", philo->philo_num);
-			exit(1);
 		}
+	//pthread_mutex_unlock(&philo->arg->death_signal);
 }
 
-void	death_checker(t_philo *philo, t_arg *arg)
+int	finish(t_philo *philo)
 {
 	int i;
 
-	printf("alive philo num%d\n", philo->philo_num);
-	while (arg->finish == 0)
+	i = 0;
+	pthread_mutex_lock(&philo->arg->death_signal);
+	i = philo->arg->finish;
+	pthread_mutex_unlock(&philo->arg->death_signal);
+	return (i);
+}
+
+void	death_checker(t_philo *philo)
+{
+	int i;
+	
+	while (philo->arg->finish == 0)
 	{
-		mysleep(900);
+		usleep(50);
 		i = 0;
-		while (i < philo->arg->philo_num)
+		while (philo->arg->finish == 0 && i < philo->arg->philo_num)
 		{
 			check_death(&philo[i]);
 			i++;
 		}
 	}
-
-	printf("alive philo num %d\n", philo->philo_num);
-	//if (philo->time_last_ate )
 }
 
 void *philo_routine(void *s)
@@ -114,17 +110,16 @@ void *philo_routine(void *s)
 	t_philo *philo;
 
 	philo = (t_philo *)(s);
-	philo->arg->finish = 0;
-	//print_all(philo);
-	while(philo->arg->finish == 0)
+	if (philo->philo_num % 2 == 0)
+		usleep(100);
+	while(1)
 	{
 		eat_philo(philo);
-		philostatus(philo, "sleeping");
-		mysleep(philo->arg->time_to_sleep);
-		printf("philo %d and  %zu > %zu \n", philo->philo_num, get_time_micro() - philo->time_last_ate, (size_t)(philo->arg->time_to_die * 1000));
-		philostatus(philo, "thinking");
-		//sleep_philo(philo);
-		//think_philo(philo);		
+		sleep_philo(philo);
+		think_philo(philo);
+		//pthread_mutex_lock(&philo->arg->death_signal);
+		// if (philo->arg->finish == 1)
+		// 	break ;	
 	}
 	return NULL;
 }
