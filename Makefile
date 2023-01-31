@@ -1,11 +1,11 @@
 NAME		= 	philosophers
 CC 			= 	gcc
 
-CFLAGS 		= 	-Wall -Wextra -Werror
+CFLAGS 		= 	-Wall -Wextra -Werror #-g -fsanitize=thread
 INCLUDE 	= 	./include
 VPATH 		= 	src
 
-SRC_FILES 	=	main.c utils.c philo.c init.c
+SRC_FILES 	=	main.c utils.c philo.c init.c end.c
 
 # object files
 OBJ_DIR = obj

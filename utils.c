@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:30:45 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/30 10:45:06 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/01/31 12:03:54 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,15 @@ int	create_threads(pthread_t *thread, t_arg *arg, t_philo *philo)
 	i = 0;
 	while (i < arg->philo_num)
 	{
-		if (pthread_create(&thread[i], NULL, &philo_routine, &philo[i]))
+		if (pthread_create(&thread[i], NULL, philo_routine, &philo[i]))
 		{
 			printf("create threads faalt");
 			return (0);
 		}
 		i++;
 	}
+	death_checker(philo);
+	end_philos(philo, thread, arg);
 	return (1);
 }
 
