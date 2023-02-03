@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/05 20:08:30 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/31 11:55:20 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/02/03 15:02:48 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ int	main(int argc, char **argv)
 		printf("Argument count is not 4 or 5\n");
 		return (1);
 	}
+	if (!check_input(argc, argv))
+		exit(1);
 	arg = malloc(sizeof(t_arg));
-	if (!arg || !check_input(argc, argv))
+	if (!arg)
 		return (1);
 	philo = init_philo(arg, argv);
 	if (!philo)
@@ -65,6 +67,5 @@ int	main(int argc, char **argv)
 		return(1);
 	if (!create_threads(thread, arg, philo))
 		return (1);
-
-	return (0);
+	return (1);
 }

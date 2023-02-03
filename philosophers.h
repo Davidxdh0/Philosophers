@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 14:17:00 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/31 12:04:03 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/02/03 15:42:02 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ typedef struct s_arg
 	int				*fork;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	death_signal;
+	pthread_mutex_t eat_count_lock;
 	int				philo_num;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				number_must_eat;
 	size_t			time_start;
-	int				eat_cnt;
+	int				eat_count;
 	int				finish;
 }	t_arg;
 
@@ -43,7 +44,7 @@ typedef struct s_philo
 	int 		forkright;
 	int			forkleft;
 	size_t		time_last_ate;
-	int			eat_count;
+	int			eat_counter;
 	int			philo_num;
 	t_arg		*arg;
 }	t_philo;
@@ -67,6 +68,7 @@ void	philostatus(t_philo *philo, char *routine);
 int		init_mutex(t_arg *arg);
 int		finish(t_philo *philo);
 void	check_fork(t_philo *philo, int fork);
+void	drop_fork(t_philo *philo, int fork);
 void    p_sleep(t_arg *data, long long ms);
 u_int64_t   get_current_time(void);
 // static u_int64_t    sec_to_millisec(u_int64_t sec);

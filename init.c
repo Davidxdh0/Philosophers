@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:28:33 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/01/30 13:53:54 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/02/03 15:42:36 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int init_struct(t_arg *arg, int argc, char **argv)
 	arg->fork = malloc(sizeof(int) * arg->philo_num);
 	if (!arg->forks || !arg->fork)
 		return (0);
-	if (!init_mutex(arg) || pthread_mutex_init(&arg->death_signal, NULL))
+	if (!init_mutex(arg) || pthread_mutex_init(&arg->death_signal, NULL) || pthread_mutex_init(&arg->eat_count_lock, NULL))
 	{
 		printf("faalt initmutex\n");
 		return (0);
@@ -71,11 +71,12 @@ t_philo *init_philo(t_arg *arg, char **argv)
 			philo[i].forkright = num - 1;
 		else
 			philo[i].forkright = i  - 1;
-		philo[i].philo_num = i;
+		philo[i].philo_num = i + 1;
 		philo[i].forkleft = i;
 		philo[i].time_last_ate = get_time_micro();
-		philo[i].eat_count = 0;
+		philo[i].eat_counter = 0;
 		philo[i].arg = arg;
+
 		i++;
 	}
 	return (philo);
