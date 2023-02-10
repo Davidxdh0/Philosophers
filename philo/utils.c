@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:30:45 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/03 15:43:35 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/02/10 14:19:09 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,76 +46,27 @@ int	ft_atoi(const char *str)
 	return (number * minorplus);
 }
 
-// {
-//  time_t       tv_sec;   /* seconds since Jan. 1, 1970 */
-// 	suseconds_t  tv_usec;  /* MICROseconds */
-//  };
-size_t	get_time_micro()
+size_t	get_time_micro(void)
 {
-	struct timeval time ;
+	struct timeval	time;
 
 	gettimeofday(&time, NULL);
-	return(time.tv_sec * 1000000 + time.tv_usec);
+	return (time.tv_sec * 1000000 + time.tv_usec);
 }
 
 void	mysleep(useconds_t time)
 {
-	long long timestart;
-	
+	long long	timestart;
+
 	timestart = get_time_micro();
-	// printf("mysleep %zu\n", time);
-	while(get_time_micro() - timestart < time)
+	while (get_time_micro() - timestart < time)
 		usleep(100);
-}
-
-static u_int64_t    sec_to_millisec(u_int64_t sec)
-{
-    u_int64_t   millisec;
-    millisec = sec * 1000;
-    return (millisec);
-}
-
-static u_int64_t    microsec_to_millisec(u_int64_t microsec)
-{
-    u_int64_t   millisec;
-    millisec = microsec / 1000;
-    return (millisec);
-}
-
-u_int64_t   get_current_time(void)
-{
-    struct timeval  tv;
-    u_int64_t       cur_time_ms;
-    gettimeofday(&tv, NULL);
-    cur_time_ms = (u_int64_t)sec_to_millisec(tv.tv_sec) + \
-    microsec_to_millisec(tv.tv_usec);
-    return (cur_time_ms);
-}
-
-/*  MORE ACCURATE VERSION OF USLEEP
- */
-void    p_sleep(t_arg *data, long long ms)
-{
-    struct timeval  start;
-    struct timeval  end;
-    gettimeofday(&start, NULL);
-    while (1)
-    {
-        gettimeofday(&end, NULL);
-        if ((end.tv_sec - start.tv_sec) * 1000 + (end.tv_usec - start.tv_usec)
-            / 1000 >= ms)
-            return ;
-        if (data->philo_num < 10)
-            usleep(100);
-        else
-            usleep(1000);
-    }
 }
 
 int	create_threads(pthread_t *thread, t_arg *arg, t_philo *philo)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i < arg->philo_num)
 	{
@@ -126,8 +77,6 @@ int	create_threads(pthread_t *thread, t_arg *arg, t_philo *philo)
 		}
 		i++;
 	}
-	death_checker(philo);
-	end_philos(philo, thread, arg);
 	return (1);
 }
 

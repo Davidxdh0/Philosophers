@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:28:33 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/03 15:42:36 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/02/09 17:03:38 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	init_mutex(t_arg *arg)
 {
-	int i;
+	int	i;
 
 	i = -1;
-	while(++i < arg->philo_num)
+	while (++i < arg->philo_num)
 	{
 		if (pthread_mutex_init(&arg->forks[i], NULL))
 			return (0);
@@ -25,7 +25,7 @@ int	init_mutex(t_arg *arg)
 	return (1);
 }
 
-int init_struct(t_arg *arg, int argc, char **argv)
+int	init_struct(t_arg *arg, int argc, char **argv)
 {
 	arg->philo_num = ft_atoi(argv[1]);
 	arg->time_to_die = ft_atoi(argv[2]);
@@ -36,16 +36,15 @@ int init_struct(t_arg *arg, int argc, char **argv)
 	else
 		arg->number_must_eat = 0;
 	arg->finish = 0;
+	arg->eat_count = 0;
 	arg->time_start = get_time_micro();
 	arg->forks = malloc(sizeof(pthread_mutex_t) * arg->philo_num);
 	arg->fork = malloc(sizeof(int) * arg->philo_num);
 	if (!arg->forks || !arg->fork)
 		return (0);
-	if (!init_mutex(arg) || pthread_mutex_init(&arg->death_signal, NULL) || pthread_mutex_init(&arg->eat_count_lock, NULL))
-	{
-		printf("faalt initmutex\n");
+	if (!init_mutex(arg) || pthread_mutex_init(&arg->death_signal, NULL) || \
+	pthread_mutex_init(&arg->eat_count_lock, NULL))
 		return (0);
-	}
 	memset(arg->fork, 0, sizeof(int) * arg->philo_num);
 	if (arg->philo_num < 1 || arg->time_to_die < 1 || arg->time_to_eat < 1 \
 		|| arg->time_to_sleep < 1 || arg->number_must_eat < 0)
@@ -53,30 +52,31 @@ int init_struct(t_arg *arg, int argc, char **argv)
 	return (1);
 }
 
-t_philo *init_philo(t_arg *arg, char **argv)
+t_philo	*init_philo(t_arg *arg, char **argv)
 {
-	t_philo 	*philo;
-	int i;
-	int num;
+	t_philo	*philo;
+	int		i;
+	int		num;
 
 	i = 0;
 	num = ft_atoi(argv[1]);
 	arg->philo_num = num;
 	philo = malloc(num * sizeof(t_philo));
-	if(!philo)
+	if (!philo)
 		return (NULL);
 	while (i < num)
 	{
+		pthread_mutex_init(&philo[i].is_finish, NULL);
 		if (i == 0)
 			philo[i].forkright = num - 1;
 		else
-			philo[i].forkright = i  - 1;
+			philo[i].forkright = i - 1;
 		philo[i].philo_num = i + 1;
 		philo[i].forkleft = i;
 		philo[i].time_last_ate = get_time_micro();
 		philo[i].eat_counter = 0;
 		philo[i].arg = arg;
-
+		philo[i].finished = 0;
 		i++;
 	}
 	return (philo);

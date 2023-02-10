@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/05 20:08:30 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/03 15:02:48 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/02/10 14:25:23 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	check_input(int argc, char **argv)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	j = 0;
@@ -31,8 +31,8 @@ int	check_input(int argc, char **argv)
 		{
 			if (argv[i][j] < '0' || argv[i][j] > '9')
 			{
-				printf("fout %c [i = %d][j = %d",argv[i][j], i, j);
-				return(0);
+				printf("fout %c [i = %d][j = %d", argv[i][j], i, j);
+				return (0);
 			}
 			j++;
 		}
@@ -41,10 +41,17 @@ int	check_input(int argc, char **argv)
 	return (1);
 }
 
+// void	leakss()
+// {
+// 	system("leaks philosopher");
+// }
+
+// atexit(leakss);
+
 int	main(int argc, char **argv)
 {
 	t_arg		*arg;
-	t_philo	 	*philo;
+	t_philo		*philo;
 	pthread_t	*thread;
 
 	if (argc != 5 && argc != 6)
@@ -53,19 +60,21 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	if (!check_input(argc, argv))
-		exit(1);
+		return (1);
 	arg = malloc(sizeof(t_arg));
 	if (!arg)
 		return (1);
+	thread = malloc(arg->philo_num * sizeof(pthread_t));
+	if (!thread)
+		return (1);
 	philo = init_philo(arg, argv);
 	if (!philo)
-		return(1);
+		return (1);
 	if (!init_struct(arg, argc, argv))
-		return(1);
-	thread = malloc(arg->philo_num * sizeof(pthread_t));
-	if(!thread)
-		return(1);
+		return (1);
 	if (!create_threads(thread, arg, philo))
 		return (1);
+	death_checker(philo);
+	end_philos(philo, thread, arg);
 	return (1);
 }

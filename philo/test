@@ -1,0 +1,14 @@
+0	1 takes right fork
+0	1 takes left fork
+0	1 is eating
+0	3 takes right fork
+0	3 takes left fork
+0	3 is eating
+0	5 takes right fork
+0	5 takes left fork
+0	5 is eating
+0	7 takes right fork
+0	7 takes left fork
+0	7 is eating
+521	1 died
+all finished = 1

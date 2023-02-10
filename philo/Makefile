@@ -1,18 +1,16 @@
 NAME		= 	philosophers
 CC 			= 	gcc
 
-CFLAGS 		= 	-Wall -Wextra -Werror #-g -fsanitize=thread
+CFLAGS 		= 	-Wall -Wextra -Werror 
+# CFLAGS		+=	-g -fsanitize=thread
 INCLUDE 	= 	./include
 VPATH 		= 	src
 
-SRC_FILES 	=	main.c utils.c philo.c init.c end.c
+SRC_FILES 	=	main.c utils.c philo.c init.c end.c eat_utils.c
 
 # object files
 OBJ_DIR = obj
 OBJ_FILES = $(SRC_FILES:%.c=$(OBJ_DIR)/%.o)
-
-# Libft
-LIBFT = libft.a
 
 # Default build
 all: $(OBJ_DIR) $(NAME)
