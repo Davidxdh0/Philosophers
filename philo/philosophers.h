@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 14:17:00 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/10 13:59:14 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/02/15 08:48:04 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ typedef struct s_arg
 typedef struct s_philo
 {
 	pthread_mutex_t	is_finish;
+	int				finished;
 	int				forkright;
 	int				forkleft;
-	int				finished;
 	size_t			time_last_ate;
 	int				eat_counter;
 	int				philo_num;

@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/30 14:36:32 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/10 18:19:56 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/02/17 17:32:34 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	philo_check_death(t_philo *philo)
 		pthread_mutex_unlock(&philo[i].is_finish);
 		i++;
 	}
-	printf("all finished = 1\n");
+	//printf("all finished = 1\n");
 }
 
 void	check_death(t_philo *philo)
@@ -58,7 +58,7 @@ void	check_death(t_philo *philo)
 		pthread_mutex_lock(&philo->arg->death_signal);
 		philo->arg->finish = 1;
 		pthread_mutex_unlock(&philo->arg->death_signal);
-		philo_check_death(philo);
+		//philo_check_death(philo);
 
 	}
 	pthread_mutex_unlock(&philo->arg->eat_count_lock);
@@ -71,7 +71,7 @@ void	check_death(t_philo *philo)
 		pthread_mutex_lock(&philo->arg->death_signal);
 		philo->arg->finish = 1;
 		pthread_mutex_unlock(&philo->arg->death_signal);
-		philo_check_death(philo);
+		//philo_check_death(philo);
 	}
 	else
 		pthread_mutex_unlock(&philo->arg->death_signal);

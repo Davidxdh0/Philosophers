@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:29:32 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/10 13:59:01 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/02/17 17:32:26 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 int	philostatus(t_philo *philo, char *routine)
 {
 	//pthread_mutex_lock(&philo->is_finish);
-	if (philo->finished == 1)
+	// if (philo->finished == 1)
+	// 	return (0);
+	if(finish(philo))
 		return (0);
-	// if(finish(philo))
-	// 	return ;
 	//pthread_mutex_unlock(&philo->is_finish);
 	pthread_mutex_lock(&philo->arg->death_signal);
 	printf("%zu\t%d %s\n", (get_time_micro() / 1000 - \
