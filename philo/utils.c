@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:30:45 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/10 14:19:09 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/02/24 11:14:11 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,23 @@ int	create_threads(pthread_t *thread, t_arg *arg, t_philo *philo)
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(&arg->create);
+	arg->created = 0;
 	while (i < arg->philo_num)
 	{
 		if (pthread_create(&thread[i], NULL, philo_routine, &philo[i]))
 		{
 			printf("create threads faalt");
+			pthread_mutex_unlock(&arg->create);
 			return (0);
 		}
 		i++;
+		arg->created = i;
+		usleep(250);
 	}
+	arg->time_start = get_time_micro();
+	pthread_mutex_unlock(&arg->create);
+	pthread_mutex_unlock(&philo->arg->create);
 	return (1);
 }
 

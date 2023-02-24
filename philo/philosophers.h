@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 14:17:00 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/15 08:48:04 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/02/24 11:32:39 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct s_arg
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	death_signal;
 	pthread_mutex_t	eat_count_lock;
+	pthread_mutex_t	create;
+	int				created;
 	int				philo_num;
 	int				time_to_die;
 	int				time_to_eat;
@@ -72,5 +74,6 @@ void	check_fork(t_philo *philo, int fork);
 void	drop_fork(t_philo *philo, int fork);
 void	end_philos(t_philo *philo, pthread_t *thread, t_arg *arg);
 void	philo_check_death(t_philo *philo);
+int		thread_creation_check(t_philo *philo);
 
 #endif

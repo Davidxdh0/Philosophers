@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:28:33 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/09 17:03:38 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/02/24 11:35:25 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	init_struct(t_arg *arg, int argc, char **argv)
 	if (!arg->forks || !arg->fork)
 		return (0);
 	if (!init_mutex(arg) || pthread_mutex_init(&arg->death_signal, NULL) || \
-	pthread_mutex_init(&arg->eat_count_lock, NULL))
+	pthread_mutex_init(&arg->eat_count_lock, NULL) || pthread_mutex_init(&arg->create, NULL))
 		return (0);
 	memset(arg->fork, 0, sizeof(int) * arg->philo_num);
 	if (arg->philo_num < 1 || arg->time_to_die < 1 || arg->time_to_eat < 1 \

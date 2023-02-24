@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/30 14:36:32 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/17 17:32:34 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/02/24 11:30:11 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@ void	end_philos(t_philo *philo, pthread_t *thread, t_arg *arg)
 		pthread_mutex_destroy(&philo->arg->forks[i]);
 		pthread_mutex_destroy(&philo[i].is_finish);
 	}
+	if (philo->arg->philo_num == 1)
+		pthread_mutex_destroy(&philo->arg->forks[1]);
 	pthread_mutex_destroy(&arg->death_signal);
 	pthread_mutex_destroy(&arg->eat_count_lock);
+	pthread_mutex_destroy(&arg->create);
 	free(arg->fork);
 	free(arg->forks);
 	free(arg);
@@ -46,7 +49,6 @@ void	philo_check_death(t_philo *philo)
 		pthread_mutex_unlock(&philo[i].is_finish);
 		i++;
 	}
-	//printf("all finished = 1\n");
 }
 
 void	check_death(t_philo *philo)
@@ -59,7 +61,6 @@ void	check_death(t_philo *philo)
 		philo->arg->finish = 1;
 		pthread_mutex_unlock(&philo->arg->death_signal);
 		//philo_check_death(philo);
-
 	}
 	pthread_mutex_unlock(&philo->arg->eat_count_lock);
 	pthread_mutex_lock(&philo->arg->death_signal);
@@ -68,6 +69,7 @@ void	check_death(t_philo *philo)
 	{
 		pthread_mutex_unlock(&philo->arg->death_signal);
 		philostatus(philo, "died");
+		if (philo->arg->philo_num == 1)
 		pthread_mutex_lock(&philo->arg->death_signal);
 		philo->arg->finish = 1;
 		pthread_mutex_unlock(&philo->arg->death_signal);
@@ -75,6 +77,7 @@ void	check_death(t_philo *philo)
 	}
 	else
 		pthread_mutex_unlock(&philo->arg->death_signal);
+	
 }
 
 int	finish(t_philo *philo)
