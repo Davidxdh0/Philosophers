@@ -6,11 +6,12 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/05 20:08:30 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/10 14:25:23 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/02/25 21:01:01 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include <stdio.h>
 
 int	check_input(int argc, char **argv)
 {
@@ -31,7 +32,7 @@ int	check_input(int argc, char **argv)
 		{
 			if (argv[i][j] < '0' || argv[i][j] > '9')
 			{
-				printf("fout %c [i = %d][j = %d", argv[i][j], i, j);
+				printf("wrong %c [i = %d][j = %d", argv[i][j], i, j);
 				return (0);
 			}
 			j++;
@@ -70,11 +71,9 @@ int	main(int argc, char **argv)
 	philo = init_philo(arg, argv);
 	if (!philo)
 		return (1);
-	if (!init_struct(arg, argc, argv))
-		return (1);
-	if (!create_threads(thread, arg, philo))
+	if (!init_struct(arg, argc, argv) || !create_threads(thread, arg, philo))
 		return (1);
 	death_checker(philo);
 	end_philos(philo, thread, arg);
-	return (1);
+	return (0);
 }

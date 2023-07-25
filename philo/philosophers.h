@@ -6,18 +6,14 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 14:17:00 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/24 11:32:39 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/03/02 10:58:53 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
-# include <stddef.h>
-# include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
 # include <unistd.h>
-# include <fcntl.h>
 # include <sys/errno.h>
 # include <pthread.h>
 # include <sys/time.h>
@@ -68,10 +64,7 @@ void	check_death(t_philo *philo);
 void	mysleep(useconds_t time);
 int		philostatus(t_philo *philo, char *routine);
 int		init_mutex(t_arg *arg);
-int		finish(t_philo *philo);
 void	eat_count(t_philo *philo);
-void	check_fork(t_philo *philo, int fork);
-void	drop_fork(t_philo *philo, int fork);
 void	end_philos(t_philo *philo, pthread_t *thread, t_arg *arg);
 void	philo_check_death(t_philo *philo);
 int		thread_creation_check(t_philo *philo);

@@ -6,11 +6,12 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/30 14:36:32 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/24 11:30:11 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/03/02 10:58:58 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include <stdio.h>
 
 void	end_philos(t_philo *philo, pthread_t *thread, t_arg *arg)
 {
@@ -37,58 +38,31 @@ void	end_philos(t_philo *philo, pthread_t *thread, t_arg *arg)
 	free(thread);
 }
 
-void	philo_check_death(t_philo *philo)
-{
-	int i;
-
-	i = 0;
-	while (i < philo->arg->philo_num)
-	{
-		pthread_mutex_lock(&philo[i].is_finish);
-		philo[i].finished = 1;
-		pthread_mutex_unlock(&philo[i].is_finish);
-		i++;
-	}
-}
-
 void	check_death(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->arg->eat_count_lock);
-	if (philo->arg->eat_count >= philo->arg->philo_num)
+	if (philo->arg->eat_count > 0)
 	{
-		philostatus(philo, "Everybody ate the required amount of times");
-		pthread_mutex_lock(&philo->arg->death_signal);
-		philo->arg->finish = 1;
-		pthread_mutex_unlock(&philo->arg->death_signal);
-		//philo_check_death(philo);
+		if (philo->arg->eat_count >= philo->arg->philo_num)
+		{
+			pthread_mutex_lock(&philo->arg->death_signal);
+			printf("%zu\t%d %s\n", (get_time_micro() / 1000 - \
+			philo->arg->time_start / 1000), philo->philo_num, "We ate enough"\
+			" required times, but we want some more please");
+			philo->arg->finish = 1;
+			pthread_mutex_unlock(&philo->arg->death_signal);
+		}
 	}
 	pthread_mutex_unlock(&philo->arg->eat_count_lock);
 	pthread_mutex_lock(&philo->arg->death_signal);
 	if (get_time_micro() - philo->time_last_ate > \
-	(size_t)(philo->arg->time_to_die * 1000))
+	(size_t)philo->arg->time_to_die * 1000)
 	{
-		pthread_mutex_unlock(&philo->arg->death_signal);
-		philostatus(philo, "died");
-		if (philo->arg->philo_num == 1)
-		pthread_mutex_lock(&philo->arg->death_signal);
+		printf("%zu\t%d %s\n", (get_time_micro() / 1000 - \
+		philo->arg->time_start / 1000), philo->philo_num, "died");
 		philo->arg->finish = 1;
-		pthread_mutex_unlock(&philo->arg->death_signal);
-		//philo_check_death(philo);
 	}
-	else
-		pthread_mutex_unlock(&philo->arg->death_signal);
-	
-}
-
-int	finish(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	pthread_mutex_lock(&philo->arg->death_signal);
-	i = philo->arg->finish;
 	pthread_mutex_unlock(&philo->arg->death_signal);
-	return (i);
 }
 
 void	death_checker(t_philo *philo)
@@ -97,12 +71,12 @@ void	death_checker(t_philo *philo)
 
 	while (philo->arg->finish == 0)
 	{
-		usleep(150);
 		i = 0;
 		while (philo->arg->finish == 0 && i < philo->arg->philo_num)
 		{
 			check_death(&philo[i]);
 			i++;
 		}
+		mysleep(100);
 	}
 }

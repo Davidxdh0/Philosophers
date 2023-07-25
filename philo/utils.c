@@ -6,11 +6,12 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:30:45 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/24 11:14:11 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/02/25 21:01:30 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include <stdio.h>
 
 static int	ft_isspace(int c)
 {
@@ -60,7 +61,7 @@ void	mysleep(useconds_t time)
 
 	timestart = get_time_micro();
 	while (get_time_micro() - timestart < time)
-		usleep(100);
+		usleep(200);
 }
 
 int	create_threads(pthread_t *thread, t_arg *arg, t_philo *philo)
@@ -72,9 +73,10 @@ int	create_threads(pthread_t *thread, t_arg *arg, t_philo *philo)
 	arg->created = 0;
 	while (i < arg->philo_num)
 	{
+		arg->time_start = get_time_micro();
 		if (pthread_create(&thread[i], NULL, philo_routine, &philo[i]))
 		{
-			printf("create threads faalt");
+			printf("create threads fails");
 			pthread_mutex_unlock(&arg->create);
 			return (0);
 		}
@@ -84,28 +86,5 @@ int	create_threads(pthread_t *thread, t_arg *arg, t_philo *philo)
 	}
 	arg->time_start = get_time_micro();
 	pthread_mutex_unlock(&arg->create);
-	pthread_mutex_unlock(&philo->arg->create);
 	return (1);
 }
-
-// void	print_all(t_philo *philo)
-// {
-// 	printf("phil num  %d \n", philo->arg->philo_num);
-// 	printf("eat count %d \n", philo->eat_counter);
-// 	printf("fork left %d \n", philo->forkleft);
-// 	printf("fork righ %d \n", philo->forkright);
-// 	printf("philo num %d \n", philo->philo_num);
-// 	printf("tlasteat  %zu \n", philo->time_last_ate);
-
-// 	// printf("%d \n", philo->arg->death_signal);
-// 	printf("eat cnt %d \n", philo->arg->eat_count);
-// 	printf("finish  %d \n", philo->arg->finish);
-// 	// printf("%d \n", philo->arg->fork);
-// 	// printf("%d \n", philo->arg->forks);
-
-// 	printf("musteat %d \n", philo->arg->number_must_eat);
-// 	printf("tstart  %zu \n", philo->arg->time_start);
-// 	printf("t_todie %d \n", philo->arg->time_to_die);
-// 	printf("tteat   %d \n", philo->arg->time_to_eat);
-// 	printf("ttsleep %d \n\n", philo->arg->time_to_sleep);
-// }
