@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/05 20:08:30 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/25 21:01:01 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/10/09 12:34:28 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ int	main(int argc, char **argv)
 	arg = malloc(sizeof(t_arg));
 	if (!arg)
 		return (1);
-	thread = malloc(arg->philo_num * sizeof(pthread_t));
-	if (!thread)
-		return (1);
 	philo = init_philo(arg, argv);
 	if (!philo)
+		return (1);
+	thread = malloc(arg->philo_num * sizeof(pthread_t));
+	if (!thread)
 		return (1);
 	if (!init_struct(arg, argc, argv) || !create_threads(thread, arg, philo))
 		return (1);

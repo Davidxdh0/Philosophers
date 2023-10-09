@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:30:45 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/02/25 21:01:30 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/10/09 12:36:28 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ size_t	get_time_micro(void)
 	return (time.tv_sec * 1000000 + time.tv_usec);
 }
 
-void	mysleep(useconds_t time)
+void	mysleep(size_t time)
 {
 	long long	timestart;
 

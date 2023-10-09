@@ -6,12 +6,12 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:28:33 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/03/02 10:29:24 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/10/09 12:26:50 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-#include <string.h>
+
 
 int	init_mutex(t_arg *arg)
 {

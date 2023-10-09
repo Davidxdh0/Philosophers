@@ -6,17 +6,19 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 14:17:00 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/03/02 10:58:53 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/10/09 12:32:48 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/errno.h>
-# include <pthread.h>
-# include <sys/time.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/errno.h>
+#include <pthread.h>
+#include <sys/time.h>
+#include <stdio.h>
+#include <string.h>
 
 typedef struct s_arg
 {
@@ -61,7 +63,7 @@ int		ft_atoi(const char *str);
 void	print_all(t_philo *philo);
 void	death_checker(t_philo *philo);
 void	check_death(t_philo *philo);
-void	mysleep(useconds_t time);
+void	mysleep(size_t time);
 int		philostatus(t_philo *philo, char *routine);
 int		init_mutex(t_arg *arg);
 void	eat_count(t_philo *philo);

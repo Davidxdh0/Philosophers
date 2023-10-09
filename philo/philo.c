@@ -6,12 +6,11 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:29:32 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/03/02 11:01:32 by dyeboa        ########   odam.nl         */
+/*   Updated: 2023/10/09 12:26:38 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-#include <stdio.h>
 
 int	philostatus(t_philo *philo, char *routine)
 {
