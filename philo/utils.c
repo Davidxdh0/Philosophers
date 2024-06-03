@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/10 15:30:45 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/10/09 12:36:28 by dyeboa        ########   odam.nl         */
+/*   Updated: 2024/06/03 18:18:11 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	create_threads(pthread_t *thread, t_arg *arg, t_philo *philo)
 		}
 		i++;
 		arg->created = i;
-		usleep(250);
 	}
 	arg->time_start = get_time_micro();
 	pthread_mutex_unlock(&arg->create);

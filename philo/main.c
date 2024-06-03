@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/05 20:08:30 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/10/09 12:34:28 by dyeboa        ########   odam.nl         */
+/*   Updated: 2024/06/03 16:53:09 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,6 @@ int	check_input(int argc, char **argv)
 	}
 	return (1);
 }
-
-// void	leakss()
-// {
-// 	system("leaks philosopher");
-// }
-
-// atexit(leakss);
 
 int	main(int argc, char **argv)
 {

@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/01/30 14:36:32 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/10/09 12:36:18 by dyeboa        ########   odam.nl         */
+/*   Updated: 2024/06/03 16:56:41 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	end_philos(t_philo *philo, pthread_t *thread, t_arg *arg)
 	int	i;
 
 	i = -1;
-	while (++i < philo->arg->philo_num)
+	while (++i < philo->arg->philo_num )
 		pthread_join(thread[i], NULL);
 	i = -1;
-	while (++i < philo->arg->philo_num)
+	while (++i < philo->arg->philo_num )
 	{
 		pthread_mutex_destroy(&philo->arg->forks[i]);
 		pthread_mutex_destroy(&philo[i].is_finish);

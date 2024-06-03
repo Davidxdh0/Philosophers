@@ -6,7 +6,7 @@
 /*   By: dyeboa <dyeboa@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 14:17:00 by dyeboa        #+#    #+#                 */
-/*   Updated: 2023/10/09 12:32:48 by dyeboa        ########   odam.nl         */
+/*   Updated: 2024/06/03 18:15:09 by dyeboa        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int		create_threads(pthread_t *thread, t_arg *arg, t_philo *philo);
 void	*philo_routine(void *s);
 int		sleep_philo(t_philo *philo);
 int		think_philo(t_philo *philo);
+void	pickup_forks(t_philo *philo);
 int		eat_philo(t_philo *philo);
 int		ft_atoi(const char *str);
 void	print_all(t_philo *philo);

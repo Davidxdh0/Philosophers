@@ -2,7 +2,7 @@ NAME		= 	philosophers
 CC 			= 	gcc
 
 CFLAGS 		= 	-Wall -Wextra -Werror -pthread -Ofast -flto -march=native
-# CFLAGS		+=	-Og -fsanitize=thread 
+CFLAGS		+=	-g -fsanitize=thread 
 INCLUDE 	= 	./include
 VPATH 		= 	src
 
